@@ -6,6 +6,8 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
+use function Pest\Laravel\post;
+
 class PostController extends Controller
 {
     /**
@@ -29,7 +31,17 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        post::create($request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+            'author' => 'required|string|max:255',
+            'published' => 'boolean',
+
+        ]));
+
+        return redirect()->route('posts.index');
+
+    
     }
 
     /**
